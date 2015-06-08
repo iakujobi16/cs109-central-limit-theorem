@@ -178,7 +178,6 @@ $(document).ready(function() {
 			means += "<br><br>"
 			sum = 0;
 			for (i = 0; i < numSamples*size; i++) {
-				console.log("we are in the for loop");
 				var x = 0;
 				for(j = 0; j< n; j++){
 					if(Math.random() < p) x++;
