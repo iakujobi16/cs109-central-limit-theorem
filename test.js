@@ -9,7 +9,7 @@ $(document).ready(function() {
 		var means = "";
 
 		var buckets = [];
-		buckets.length = (diff - 1) * 2;
+		buckets.length = 20;
 		for (i = 0; i < buckets.length; i ++) {
 			buckets[i] = 0;
 		}
@@ -17,14 +17,14 @@ $(document).ready(function() {
 		means += "Mean: " + ((max + min)/2).toString() + "<br>";
 		means += "Variance: " + (((max - min) * (max - min))/(12*size)).toString()
 		means += "<br><br>"
-		means += "Sample Means:<br>"
+		//means += "Sample Means:<br>"
 		var sum = 0;
 		for (i = 0; i < 100*size; i++) {
 			sum += Math.floor(Math.random()*diff) + min;
 			if (i % size == size - 1) {
 				var avg = sum/size;
-				means += avg + "<br>";
-				buckets[Math.floor(avg - min)/0.5] += 1;
+				//means += avg + "<br>";
+				buckets[Math.floor((avg - min)/((max-min)/buckets.length))] += 1;
 				sum = 0;
 			}
 		}
@@ -42,7 +42,7 @@ $(document).ready(function() {
 		var chart = $("#clt-chart").CanvasJSChart();
 		for (i = 0; i < buckets.length; i++) {
 			chart.options.data[0].dataPoints.push({
-				x: i*.5 + min, y: buckets[i]
+				x: i*((max-min)/buckets.length)+ min, y: buckets[i]
 			});
 		}
 		chart.render();
