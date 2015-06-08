@@ -27,6 +27,15 @@ $(document).ready(function() {
 		}
 
 		var options = {
+			title: {
+				text: "Population of Sample Means"
+			},
+			axisX: {
+				title: "Sample Means"
+			},
+			axisY: {
+				title: "Number of Occurences"
+			},
 			data: [
 				{
 					type: "column",
@@ -40,6 +49,9 @@ $(document).ready(function() {
 
 		if(dist === "Uniform"){
 			var distOptions = {
+				title: {
+					text: "Uniform Distribution PDF"
+				},
 				axisX: {
 					minimum: min-1,
 					maximum: max +1
@@ -90,6 +102,9 @@ $(document).ready(function() {
 
 		} else if(dist === "Poisson"){
 			var distOptions = {
+				title: {
+					text: "Poisson Distribution PMF"
+				},
 				data: [
 					{
 						type: "column",
@@ -137,6 +152,9 @@ $(document).ready(function() {
 			chart.render();
 		} else if(dist === "Binomial"){
 			var distOptions = {
+				title: {
+					text: "Binomial Distribution PMF"
+				},
 				data: [
 					{
 						type: "column",
@@ -180,6 +198,9 @@ $(document).ready(function() {
 			chart.render();			
 		} else if(dist === "Exponential"){
 			var distOptions = {
+				title: {
+					text: "Exponential Distribution PDF"
+				},
 				data: [
 					{
 						type: "spline",
