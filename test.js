@@ -1,7 +1,7 @@
 var factorials = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 
 				3628800, 39916800, 479001600, 6227020800, 87178291200, 
-				1307674368000, 20922789888000, 355687428096000, 6402373705728000, 
-				121645100408832000, 2432902008176640000];
+				1307674368000, 20922789888000, 355687428096000, 
+				6402373705728000, 121645100408832000, 2432902008176640000];
 
 $(document).ready(function() {
 	$("#info").submit(function(e){
@@ -80,7 +80,8 @@ $(document).ready(function() {
 			uniChart.render();
 
 			means += "<br>Mean: " + ((max + min)/2).toString() + "<br>";
-			means += "Variance: " + (((max - min) * (max - min))/(12)).toString()
+			means += "Variance: " + (((max - min) * 
+				(max - min))/(12)).toString()
 			means += "<br><br>"
 
 			var diff = max - min + 1
@@ -89,7 +90,8 @@ $(document).ready(function() {
 				sum += Math.floor(Math.random()*diff) + min;
 				if (i % size == size - 1) {
 					var avg = sum/size;
-					buckets[Math.floor((avg - min)/((max-min)/buckets.length))] += 1;
+					buckets[Math.floor((avg - min)/
+						((max-min)/buckets.length))] += 1;
 					sum = 0;
 				}
 			}
@@ -118,7 +120,8 @@ $(document).ready(function() {
 			var poiChart = $("#dist-chart").CanvasJSChart();
 			for (i = 0; i <= 20; i++) {
 				poiChart.options.data[0].dataPoints.push({
-					x: i, y: Math.exp(-lambda)*Math.pow(lambda, i)/factorials[i]
+					x: i, y: Math.exp(-lambda)*
+								Math.pow(lambda, i)/factorials[i]
 				});
 			}
 			poiChart.render();
@@ -168,7 +171,8 @@ $(document).ready(function() {
 			var binChart = $("#dist-chart").CanvasJSChart();
 			for (i = 0; i <= n; i++) {
 				binChart.options.data[0].dataPoints.push({
-					x: i, y: (Math.pow(1-p, n-i) * Math.pow(p, i) * factorials[n] )/(factorials[i] * factorials[n-i])
+					x: i, y: (Math.pow(1-p, n-i) * Math.pow(p, i) * 
+							factorials[n] )/(factorials[i] * factorials[n-i])
 				});
 			}
 			binChart.render();
