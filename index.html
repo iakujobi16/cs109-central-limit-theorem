@@ -17,14 +17,26 @@
 <body>
 
 	<h1>Central Limit Theorem</h1>
+
 	<form id="info">
+		<select name="distribution">
+			<option value="Uniform">Uniform</option>
+			<option value="Binomial">Binomial</option>
+			<option value="Poisson">Poisson</option>
+		</select>
 		Minimum Value: <input type="text" name="min">
 		Maximum Value: <input type="text" name="max">
 		Sample Size: <input type="text" name="size">
+		N: <input type ="text" name="n">
+		P: <input type ="text" name="p">
+		Lambda: <input type ="text" name="lambda">
 		<input type="submit" id="random">
 	</form>
 	<div id="change"></div>
-	<div id="clt-chart"></div>
+	
+	<div id="dist-chart" style="height:400px;"></div>
+
+	<div id="clt-chart" style="height:400px;"></div>
 	
 
 </body>
