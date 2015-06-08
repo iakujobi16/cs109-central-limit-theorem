@@ -15,7 +15,7 @@ $(document).ready(function() {
 		var size = parseInt($("input:text[name=size]").val());
 		var diff = max - min + 1
 		var means = "";
-		var lambda = parseInt($("input:text[name=lambda]").val());
+		var lambda = parseFloat($("input:text[name=lambda]").val());
 		var n = parseInt($("input:text[name=n]").val());
 		var p = parseFloat($("input:text[name=p]").val());
 		var dist = $("select[name=distribution]").val();
@@ -77,7 +77,7 @@ $(document).ready(function() {
 			uniChart.render();
 
 			means += "Mean: " + ((max + min)/2).toString() + "<br>";
-			means += "Variance: " + (((max - min) * (max - min))/(12*size)).toString()
+			means += "Variance: " + (((max - min) * (max - min))/(12)).toString()
 			means += "<br><br>"
 			//means += "Sample Means:<br>"
 			sum = 0;
@@ -116,6 +116,10 @@ $(document).ready(function() {
 				});
 			}
 			poiChart.render();
+
+			means += "Mean: " + (lambda).toString() + "<br>";
+			means += "Variance: " + (lambda).toString();
+			means += "<br><br>"
 			sum = 0;
 			for (i = 0; i < 100*size; i++) {
 				//sum += Math.floor(Math.random()*diff) + min;
@@ -163,6 +167,10 @@ $(document).ready(function() {
 				});
 			}
 			binChart.render();
+
+			means += "Mean: " + (n*p).toString() + "<br>";
+			means += "Variance: " + (n*p*(1-p)).toString();
+			means += "<br><br>"
 			sum = 0;
 			for (i = 0; i < 100*size; i++) {
 				console.log("we are in the for loop");
@@ -186,7 +194,61 @@ $(document).ready(function() {
 				});
 			}
 			chart.render();			
+		} else if(dist === "Exponential"){
+			var distOptions = {
+				data: [
+					{
+						type: "spline",
+						dataPoints: [
+							
+						]
+					}
+				]
+			}
+
+			$("#dist-chart").CanvasJSChart(distOptions);
+
+			var expChart = $("#dist-chart").CanvasJSChart();
+
+			for (i = 0; i < 5; i += 0.1) {
+				expChart.options.data[0].dataPoints.push({
+					x: i, y: lambda*Math.exp(-lambda*i)
+				});
+			}
+
+//			uniChart.options.data[0].dataPoints.push({
+//				x: min, y: 1/(max-min)
+//			});
+//			uniChart.options.data[0].dataPoints.push({
+//				x: max, y: 1/(max-min)
+//			});
+
+			expChart.render();
+
+			means += "Mean: " + (1/lambda).toString() + "<br>";
+			means += "Variance: " + (1/(lambda*lambda)).toString()
+			means += "<br><br>"
+			//means += "Sample Means:<br>"
+			sum = 0;
+			for (i = 0; i < 100*size; i++) {
+				sum += Math.floor(Math.log(1-Math.random())/(-lambda));
+				if (i % size == size - 1) {
+					var avg = sum/size;
+					//means += avg + "<br>";
+					buckets[Math.floor(avg/((10)/buckets.length))] += 1;
+					sum = 0;
+				}
+			}
+			for (i = 0; i < buckets.length; i++) {
+				chart.options.data[0].dataPoints.push({
+					x: i*((10)/buckets.length), y: buckets[i]
+				});
+			}
+			chart.render();
+
 		}
+
+
 
 
 
