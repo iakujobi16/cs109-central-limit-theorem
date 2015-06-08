@@ -3,22 +3,21 @@ var factorials = [1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880,
 				1307674368000, 20922789888000, 355687428096000, 6402373705728000, 
 				121645100408832000, 2432902008176640000];
 
-//restrict values of: n, lambda, p
-//let users know!!
-
 $(document).ready(function() {
 	$("#info").submit(function(e){
 		e.preventDefault();
 
+		var dist = $("select[name=distribution]").val();
+		var size = parseInt($("input:text[name=size]").val());
+		var numSamples = parseInt($("input:text[name=numSamples]").val());
+
 		var min = parseInt($("input:text[name=min]").val());
 		var max = parseInt($("input:text[name=max]").val());
-		var size = parseInt($("input:text[name=size]").val());
-		var diff = max - min + 1
-		var means = "";
 		var lambda = parseFloat($("input:text[name=lambda]").val());
 		var n = parseInt($("input:text[name=n]").val());
 		var p = parseFloat($("input:text[name=p]").val());
-		var dist = $("select[name=distribution]").val();
+
+		var means = "";
 
 		var sum;
 		var buckets = [];
@@ -57,7 +56,6 @@ $(document).ready(function() {
 							{x: min, y: 1/(max-min)},
 							{x: max, y: 1/(max-min)},
 							{x: max, y: 0},
-							//{x: max+1, y: 0}
 						]
 					}
 				]
@@ -67,25 +65,18 @@ $(document).ready(function() {
 
 			var uniChart = $("#dist-chart").CanvasJSChart();
 
-//			uniChart.options.data[0].dataPoints.push({
-//				x: min, y: 1/(max-min)
-//			});
-//			uniChart.options.data[0].dataPoints.push({
-//				x: max, y: 1/(max-min)
-//			});
-
 			uniChart.render();
 
-			means += "Mean: " + ((max + min)/2).toString() + "<br>";
+			means += "<br>Mean: " + ((max + min)/2).toString() + "<br>";
 			means += "Variance: " + (((max - min) * (max - min))/(12)).toString()
 			means += "<br><br>"
-			//means += "Sample Means:<br>"
+
+			var diff = max - min + 1
 			sum = 0;
-			for (i = 0; i < 100*size; i++) {
+			for (i = 0; i < numSamples*size; i++) {
 				sum += Math.floor(Math.random()*diff) + min;
 				if (i % size == size - 1) {
 					var avg = sum/size;
-					//means += avg + "<br>";
 					buckets[Math.floor((avg - min)/((max-min)/buckets.length))] += 1;
 					sum = 0;
 				}
@@ -117,13 +108,11 @@ $(document).ready(function() {
 			}
 			poiChart.render();
 
-			means += "Mean: " + (lambda).toString() + "<br>";
+			means += "<br>Mean: " + (lambda).toString() + "<br>";
 			means += "Variance: " + (lambda).toString();
 			means += "<br><br>"
 			sum = 0;
-			for (i = 0; i < 100*size; i++) {
-				//sum += Math.floor(Math.random()*diff) + min;
-
+			for (i = 0; i < numSamples*size; i++) {
 				var l = Math.exp(-lambda);
 				var x = 1;
 				var k = 0;
@@ -136,8 +125,6 @@ $(document).ready(function() {
 
 				if (i % size == size - 1) {
 					var avg = sum/size;
-					//means += avg + "<br>";
-					//buckets[Math.floor((avg - min)/((max-min)/buckets.length))] += 1;
 					buckets[Math.floor(avg)] += 1;
 					sum = 0;
 				}
@@ -168,13 +155,12 @@ $(document).ready(function() {
 			}
 			binChart.render();
 
-			means += "Mean: " + (n*p).toString() + "<br>";
+			means += "<br>Mean: " + (n*p).toString() + "<br>";
 			means += "Variance: " + (n*p*(1-p)).toString();
 			means += "<br><br>"
 			sum = 0;
-			for (i = 0; i < 100*size; i++) {
+			for (i = 0; i < numSamples*size; i++) {
 				console.log("we are in the for loop");
-				//sum += Math.floor(Math.random()*diff) + min;
 				var x = 0;
 				for(j = 0; j< n; j++){
 					if(Math.random() < p) x++;
@@ -182,9 +168,7 @@ $(document).ready(function() {
 				sum += x;
 				if (i % size == size - 1) {
 					var avg = sum/size;
-					//means += avg + "<br>";
 					buckets[Math.floor(avg/(n/20))] += 1;
-					//buckets[Math.floor((avg - min)/((max-min)/buckets.length))] += 1;
 					sum = 0;
 				}
 			}
@@ -216,25 +200,16 @@ $(document).ready(function() {
 				});
 			}
 
-//			uniChart.options.data[0].dataPoints.push({
-//				x: min, y: 1/(max-min)
-//			});
-//			uniChart.options.data[0].dataPoints.push({
-//				x: max, y: 1/(max-min)
-//			});
-
 			expChart.render();
 
-			means += "Mean: " + (1/lambda).toString() + "<br>";
+			means += "<br>Mean: " + (1/lambda).toString() + "<br>";
 			means += "Variance: " + (1/(lambda*lambda)).toString()
 			means += "<br><br>"
-			//means += "Sample Means:<br>"
 			sum = 0;
-			for (i = 0; i < 100*size; i++) {
+			for (i = 0; i < numSamples*size; i++) {
 				sum += Math.floor(Math.log(1-Math.random())/(-lambda));
 				if (i % size == size - 1) {
 					var avg = sum/size;
-					//means += avg + "<br>";
 					buckets[Math.floor(avg/((10)/buckets.length))] += 1;
 					sum = 0;
 				}
@@ -247,11 +222,6 @@ $(document).ready(function() {
 			chart.render();
 
 		}
-
-
-
-
-
 		$("#change").html(means);
 	});
 });

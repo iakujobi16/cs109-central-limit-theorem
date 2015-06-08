@@ -16,30 +16,41 @@
 
 <body>
 
-	<h1>Central Limit Theorem</h1>
-	<h2>This </h2>
+	<h1><center>Central Limit Theorem</center></h1>
+
+	<h2><center>"I know of scarcely anything so apt to impress the imagination as the wonderful form of cosmic order expressed by the 'Law of Frequency of Error'... The law would have been personified by the Greeks and deified... It reigns with serentiy and in complete self-effacement, amidst the wildest confusion... Whenever a large sample of chaotic elements are taken in hand and marshaled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along." - Sir Francis Galton</center></h2> 
+
+	<h3>The central limit theorem states that the sampling distribution of the sample mean approaches a normal distribution as the size of the sample grows. This means that the histogram of the means of many samples should approach a bell-shaped curve. Each sample consists of "Sample Size" pseudorandom numbers generated using the chosen distribution and there are "Number of Sample" averages taken to create the histogram. The first chart shows the PDF or PMF of the chosen distribution, and the second chart shows the central limit theorem at work!</h3>
+
+	<h3>To use this site, choose a distribution, enter both a sample size and the number of samples you would like to generate, and fill in the appropriate parameters associated with the chosen distribution. </h3>
 
 	<form id="info">
-		<select name="distribution">
+		Distributions: <select name="distribution">
 			<option value="Uniform">Uniform</option>
 			<option value="Binomial">Binomial</option>
 			<option value="Poisson">Poisson</option>
 			<option value="Exponential">Exponential</option>
-
-		</select>
-		Minimum Value: <input type="text" name="min">
-		Maximum Value: <input type="text" name="max">
+		</select> 
+		<input type="submit" id="random"> <br>
 		Sample Size: <input type="text" name="size">
-		N: <input type ="text" name="n">
-		P: <input type ="text" name="p">
-		Lambda: <input type ="text" name="lambda">
-		<input type="submit" id="random">
+		Number of Samples: <input type="text" name ="numSamples"> <br>
+		
+		Alpha: <input type="text" name="min">
+		Beta: <input type="text" name="max"> <br>
+
+		Lambda (between 0 and 20 inclusive): <input type ="text" name="lambda"> <br>
+		N (between 1 and 20 inclusive): <input type ="text" name="n">
+		P (between 0 and 1 inclusive): <input type ="text" name="p"> <br>
+		
+		
 	</form>
 	<div id="change"></div>
 	
 	<div id="dist-chart" style="height:400px;"></div>
 
-	<div id="clt-chart" style="height:400px;"></div>
+	<div id="clt-chart" style="height:400px;"></div> 
+
+	<h5>Ikechi Akujobi and Minymoh Anelone</h5>
 	
 
 </body>
